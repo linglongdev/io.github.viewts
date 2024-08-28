@@ -1,0 +1,28 @@
+version: "1"
+
+package:
+  id: io.github.viewts
+  name: viewts
+  version: 1.2.0.1
+  kind: app
+  description: |
+    Display PCR, DTS, PTS, bitrate, jitter of a mpeg TS
+
+command:
+  - /opt/apps/io.github.viewts/files/bin/viewTS
+
+base: org.deepin.foundation/23.0.0
+runtime: org.deepin.Runtime/23.0.1
+
+sources:
+  - kind: git
+    url: https://github.com/wjyrich/viewts.git
+    version: master
+    commit: b04671da41252a30851f011165f272579f01d966
+
+build: |
+  cd /project/linglong/sources/viewts.git
+  cd qt_tstools
+  qmake -makefile PREFIX=${PREFIX} LIB_INSTALL_DIR=${PREFIX}/lib/${TRIPLET}
+  make -j$(nproc)
+  make install
